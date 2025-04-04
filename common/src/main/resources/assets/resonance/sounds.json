@@ -1,0 +1,108 @@
+{
+  "ambient.forest.idle": {
+    "subtitle": "resonance.sound.ambient.forest.idle",
+    "category": "ambiance",
+    "sounds": [
+      "resonance:leaves1",
+      "resonance:leaves2",
+      "resonance:leaves3",
+      "resonance:leaves4"
+    ]
+  },
+  "ambient.forest.additions": {
+    "category": "ambiance",
+    "sounds": [
+      "resonance:forest/forest_addition1",
+      "resonance:forest/forest_addition2",
+      {"name": "resonance:forest/forest_addition3", "volume": 0.5},
+      {"name": "resonance:forest/forest_addition4", "volume": 0.5},
+      "resonance:forest/forest_addition5",
+      "resonance:forest/forest_addition6"
+    ]
+  },
+  "ambient.forest.night_additions": {
+    "category": "ambiance",
+    "sounds": [
+      "resonance:forest/forest_night_addition1",
+      "resonance:forest/forest_night_addition2"
+    ]
+  },
+  "ambient.forest.night_wolf": {
+    "category": "ambiance",
+    "subtitle": "resonance.sound.ambient.forest.night_wolf",
+    "sounds": [
+      "resonance:forest/forest_night_addition3"
+    ]
+  },
+  "ambient.forest.dawn": {
+    "subtitle": "resonance.sound.ambient.forest.dawn",
+    "category": "ambiance",
+    "sounds": [
+      {"name":"resonance:forest/forest_dawn1", "volume": 0.2},
+      {"name":"resonance:forest/forest_dawn2", "volume": 0.2}
+    ]
+  },
+  "ambient.plains.tree_additions": {
+    "category": "block",
+    "sounds": [
+      {"name": "resonance:plains_tree_addition1", "volume": 0.2},
+      {"name": "resonance:plains_tree_addition2", "volume": 1.0}
+    ]
+  },
+  "ambient.grass.night_idle": {
+    "subtitle": "resonance.sound.ambient.grass.night_idle",
+    "category": "ambiance",
+    "sounds": [
+      "resonance:night1",
+      "resonance:night2",
+      "resonance:night3"
+    ]
+  },
+  "ambient.river": {
+    "subtitle": "resonance.sound.ambient.river",
+    "category": "ambiance",
+    "sounds": [
+      "resonance:river"
+    ]
+  },
+  "ambient.ocean": {
+    "subtitle": "resonance.sound.ambient.ocean",
+    "category": "ambiance",
+    "sounds": [
+      "resonance:ocean/loop"
+    ]
+  },
+  "ambient.thunder.close": {
+    "subtitle": "resonance.sound.ambient.thunder.close",
+    "sounds": [
+      "resonance:thunder/close1",
+      "resonance:thunder/close2",
+      "resonance:thunder/close3"
+    ]
+  },
+  "ambient.thunder.medium": {
+    "subtitle": "resonance.sound.ambient.thunder.medium",
+    "sounds": [
+      "resonance:thunder/medium1",
+      "resonance:thunder/medium2",
+      "resonance:thunder/medium3"
+    ]
+  },
+  "ambient.thunder.far": {
+    "subtitle": "resonance.sound.ambient.thunder.far",
+    "sounds": [
+      "resonance:thunder/far1",
+      "resonance:thunder/far2",
+      "resonance:thunder/far3"
+    ]
+  },
+  "ambient.swamp.idle": {
+    "category": "ambiance",
+    "subtitle": "resonance.sound.ambient.swamp.idle",
+    "sounds": [
+      "resonance:swamp/idle1",
+      "resonance:swamp/idle2",
+      "resonance:swamp/idle3"
+    ]
+  }
+}

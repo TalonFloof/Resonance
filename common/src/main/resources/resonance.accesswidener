@@ -1,0 +1,4 @@
+accessWidener v2 named
+accessible field net/minecraft/client/resources/sounds/BiomeAmbientSoundsHandler$LoopSoundInstance fade I
+accessible field net/minecraft/client/resources/sounds/BiomeAmbientSoundsHandler$LoopSoundInstance fadeDirection I
+accessible field net/minecraft/client/resources/sounds/AbstractSoundInstance volume F
