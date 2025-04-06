@@ -56,10 +56,10 @@ public class CommonClass {
                 return;
             if(isInVillage) {
                 if(dayTime(mc.level) == 5) {
-                    mc.player.playSound(VILLAGE_ROOSTER,1.0F,1.0F);
+                    mc.player.playSound(VILLAGE_ROOSTER,10000000.0F,1.0F);
                 }
-                if(mc.level.getRandom().nextInt(config.ambiance.villageAdditionsChance) == 0) {
-                    mc.player.playSound(VILLAGE_ADDITIONS,1.0F,1.0F);
+                if(mc.level.getRandom().nextInt(config.ambiance.villageAdditionsChance) == 0 && dayTime(mc.level) < 12000) {
+                    mc.player.playSound(VILLAGE_ADDITIONS,10000000.0F,1.0F);
                 }
             }
             var biome = mc.level.getBiome(new BlockPos(mc.player.getBlockX(),mc.player.getBlockY(),mc.player.getBlockZ()));
@@ -85,6 +85,7 @@ public class CommonClass {
                     AmbientWaterBlockSoundsPlayer.RIVER_LOOP.fadeOut();
                 }
             }
+            timeSinceNightIdle++;
             timeSinceJungle++;
             timeSinceAddition++;
         }

@@ -63,7 +63,6 @@
     "subtitle": "resonance.sound.ambient.forest.dawn",
     "category": "ambiance",
     "sounds": [
-      {"name":"resonance:forest/forest_dawn1", "volume": 0.2},
       {"name":"resonance:forest/forest_dawn2", "volume": 0.2}
     ]
   },

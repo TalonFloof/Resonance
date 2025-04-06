@@ -37,8 +37,9 @@ public class AmbientGrassBlockSoundsPlayer {
                 return;
             var biome = level.getBiome(pos);
             if(dayTime(level) > 13000) {
-                if(rsource.nextInt(config.ambiance.nightIdleChance) == 0 && isInAmbientSoundBiome(biome) && shouldPlayAmbientSound(level, pos)) {
+                if(isInAmbientSoundBiome(biome) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSinceNightIdle >= 8*20) {
                     level.playLocalSound((double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), NIGHT_IDLE, SoundSource.AMBIENT, 1.0F, 1.0F, false);
+                    CommonClass.timeSinceNightIdle = 0;
                 }
                 if (Minecraft.getInstance().player.getPosition(0).distanceTo(pos.getCenter()) <= 8 && biome.is(BiomeTags.IS_JUNGLE) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSinceJungle >= (9*20)+10) {
                     level.playLocalSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), JUNGLE_NIGHT_IDLE, SoundSource.AMBIENT, 1.0F, 1.0F, false);
