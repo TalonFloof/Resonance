@@ -17,8 +17,8 @@ repositories {
     mavenCentral()
     // https://docs.gradle.org/current/userguide/declaring_repositories.html#declaring_content_exclusively_found_in_one_repository
     maven {
-        name 'Xander Maven'
-        url 'https://maven.isxander.dev/releases'
+        name = "FzzyMaven"
+        url = "https://maven.fzzyhmstrs.me/"
     }
     exclusiveContent {
         forRepository {
@@ -103,7 +103,7 @@ processResources {
             'neoforge_loader_version_range': neoforge_loader_version_range,
             'credits'                      : credits,
             'java_version'                 : java_version,
-            'yacl_version'                 : yacl_version
+            'fzzy_version'                 : fzzy_version
     ]
 
     var jsonExpandProps = expandProps.collectEntries {

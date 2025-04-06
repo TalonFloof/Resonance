@@ -17,8 +17,6 @@ public abstract class GrassBlockMixin extends SpreadingSnowyDirtBlock {
 
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource rsource) {
-        if(!level.isClientSide())
-            throw new RuntimeException("guh?");
         AmbientGrassBlockSoundsPlayer.playAmbientBlockSounds(state,level,pos,rsource);
     }
 }

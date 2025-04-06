@@ -15,6 +15,8 @@ import sh.talonfloof.resonance.config.ResonanceConfig;
 
 import java.util.Objects;
 
+import static sh.talonfloof.resonance.CommonClass.config;
+
 @Mixin(LightningBolt.class)
 public class LightningBoltMixin {
     @Unique
@@ -26,8 +28,7 @@ public class LightningBoltMixin {
 
     @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;playLocalSound(DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FFZ)V"))
     private void playSound(Level level, double x, double y, double z, SoundEvent sound, SoundSource source, float volume, float pitch, boolean useDistance) {
-        var inst = ResonanceConfig.getInstance();
-        if(!inst.newThunderSounds) {
+        if(!config.weather.newThunderSounds) {
             level.playLocalSound(x,y,z,sound,source,volume,pitch,useDistance);
             return;
         }
@@ -36,9 +37,9 @@ public class LightningBoltMixin {
 
         double distanceToEntity = Objects.requireNonNull(player).distanceTo(lightningBolt);
 
-        if (distanceToEntity <= inst.closeThunderDistance) {
+        if (distanceToEntity <= config.weather.closeThunderDistance) {
             playThunderSound(level, lightningBolt, THUNDER_CLOSE, 5000.0f, false);
-        } else if (distanceToEntity <= inst.mediumThunderDistance) {
+        } else if (distanceToEntity <= config.weather.mediumThunderDistance) {
             playThunderSound(level, lightningBolt, THUNDER_MEDIUM, 10000.0f, false);
         } else {
             playThunderSound(level, lightningBolt, THUNDER_FAR, 10000.0f, false);

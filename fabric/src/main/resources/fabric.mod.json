@@ -13,16 +13,10 @@
     },
     "license": "${license}",
     "icon": "${mod_id}.png",
-    "environment": "*",
+    "environment": "client",
     "entrypoints": {
-        "main": [
-            "sh.talonfloof.resonance.ResonanceMod"
-        ],
         "client": [
             "sh.talonfloof.resonance.ResonanceModClient"
-        ],
-        "modmenu": [
-            "sh.talonfloof.resonance.config.ModMenuIntegration"
         ]
     },
     "mixins": [
@@ -34,7 +28,7 @@
         "fabric-api": "*",
         "minecraft": "~${minecraft_version}",
         "java": ">=${java_version}",
-        "yet_another_config_lib_v3": ">=${yacl_version}"
+        "fzzy_config": ">=${fzzy_version}"
     }
 }
   

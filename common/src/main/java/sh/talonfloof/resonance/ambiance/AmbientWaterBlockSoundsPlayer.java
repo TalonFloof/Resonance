@@ -18,6 +18,7 @@ import sh.talonfloof.resonance.CommonClass;
 import sh.talonfloof.resonance.Constants;
 import sh.talonfloof.resonance.config.ResonanceConfig;
 
+import static sh.talonfloof.resonance.CommonClass.config;
 import static sh.talonfloof.resonance.Constants.dayTime;
 
 public class AmbientWaterBlockSoundsPlayer {
@@ -31,7 +32,7 @@ public class AmbientWaterBlockSoundsPlayer {
         if (state.is(Fluids.WATER) && pos.getY() >= 60) {
             if(level.getRainLevel(0) > 0)
                 return;
-            if(rsource.nextInt(ResonanceConfig.getInstance().swampIdleChance) == 0 && level.getBiome(pos).is(Constants.IS_SWAMP)) {
+            if(rsource.nextInt(config.ambiance.swampIdleChance) == 0 && level.getBiome(pos).is(Constants.IS_SWAMP)) {
                 level.playLocalSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), SWAMP_IDLE, SoundSource.AMBIENT, 1.0F, 1.0F, false);
             }
             if(level.getBiome(pos).is(BiomeTags.IS_RIVER)) {

@@ -27,6 +27,31 @@
       "resonance:forest/forest_night_addition2"
     ]
   },
+  "ambient.jungle.idle": {
+    "subtitle": "resonance.sound.ambient.jungle.idle",
+    "category": "ambiance",
+    "sounds": [
+      "resonance:jungle/idle1",
+      "resonance:jungle/idle2"
+    ]
+  },
+  "ambient.jungle.night_idle": {
+    "subtitle": "resonance.sound.ambient.jungle.night_idle",
+    "category": "ambiance",
+    "sounds": [
+      "resonance:jungle/night_idle1",
+      "resonance:jungle/night_idle2"
+    ]
+  },
+  "ambient.jungle.additions": {
+    "category": "ambiance",
+    "sounds": [
+      "resonance:jungle/additions1",
+      "resonance:jungle/additions2",
+      "resonance:jungle/additions3",
+      "resonance:jungle/additions4"
+    ]
+  },
   "ambient.forest.night_wolf": {
     "category": "ambiance",
     "subtitle": "resonance.sound.ambient.forest.night_wolf",
@@ -103,6 +128,22 @@
       "resonance:swamp/idle1",
       "resonance:swamp/idle2",
       "resonance:swamp/idle3"
+    ]
+  },
+  "ambient.village.additions": {
+    "category": "ambiance",
+    "sounds": [
+      "resonance:village/additions1",
+      "resonance:village/additions2",
+      "resonance:village/additions3",
+      "resonance:village/additions4"
+    ]
+  },
+  "ambient.village.rooster": {
+    "subtitle": "resonance.sound.ambient.village.rooster",
+    "category": "ambiance",
+    "sounds": [
+      "resonance:village/rooster1"
     ]
   }
 }

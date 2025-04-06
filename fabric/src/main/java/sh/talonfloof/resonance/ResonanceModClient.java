@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 public class ResonanceModClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        CommonClass.init();
         ClientTickEvents.START_CLIENT_TICK.register((x) -> CommonClass.onClientTick());
     }
 }

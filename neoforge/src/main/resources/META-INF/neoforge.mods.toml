@@ -27,11 +27,11 @@ modId = "minecraft"
 type="required" #mandatory (Can be one of "required", "optional", "incompatible" or "discouraged")
 versionRange = "${minecraft_version_range}"
 ordering = "NONE"
-side = "BOTH"
+side = "CLIENT"
 [[dependencies.${mod_id}]]
-modId = "yet_another_config_lib_v3"
+modId = "fzzy_config"
 type="required"
-versionRange = "[${yacl_version},)"
+versionRange = "[${fzzy_version},)"
 ordering = "NONE"
 side = "CLIENT"
 

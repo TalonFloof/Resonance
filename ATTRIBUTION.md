@@ -5,5 +5,6 @@ Thunder, Very Close, No Rain, B.wav by InspectorJ -- https://freesound.org/s/320
 Heavy Rain and Thunder 1 by be-steele -- https://freesound.org/s/712959/ -- License: Attribution 4.0 (thunder/far1.ogg, thunder/far2.ogg, thunder/far3.ogg, thunder/medium1.ogg)  
 Long Thunder Roll.wav by lonemonk -- https://freesound.org/s/156872/ -- License: Attribution 3.0 (thunder/medium2.ogg, thunder/medium3.ogg)  
 Ambience, Seaside Waves, Close, A.wav by InspectorJ -- https://freesound.org/s/400632/ -- License: Attribution 4.0
+Rooster, Crowing, A.wav by InspectorJ -- https://freesound.org/s/384188/ -- License: Attribution 4.0
 
 All other sounds are public domain or under the Creative Commons Zero license
