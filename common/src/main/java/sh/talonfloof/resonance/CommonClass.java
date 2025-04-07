@@ -5,9 +5,11 @@ import me.fzzyhmstrs.fzzy_config.api.RegisterType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.BiomeAmbientSoundsHandler;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.SectionPos;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.level.block.entity.BellBlockEntity;
 import net.minecraft.world.phys.AABB;
 import sh.talonfloof.resonance.ambiance.AmbientWaterBlockSoundsPlayer;
 import sh.talonfloof.resonance.config.ResonanceConfig;
@@ -31,6 +33,7 @@ public class CommonClass {
     public static long timeSinceAddition = 0;
     public static long timeSinceJungle = 0;
     public static long timeSinceNightIdle = 0;
+    public static long timeSincePlains = 0;
     public static long villageScanInterval = 0;
     public static boolean isInVillage = false;
 
@@ -47,8 +50,18 @@ public class CommonClass {
                     var playerEyes = mc.player.getEyePosition();
                     AABB box = AABB.unitCubeFromLowerCorner(playerEyes).inflate(64);
                     var villagerEntities = mc.level.getEntitiesOfClass(Villager.class, box);
-                    if (!villagerEntities.isEmpty()) {
-                        isInVillage = villagerEntities.stream().count() > 2;
+                    if(!villagerEntities.isEmpty()) {
+                        for (int x = -4; x <= 4; x++) {
+                            for (int z = -4; z <= 4; z++) {
+                                var c = mc.level.getChunk(SectionPos.blockToSectionCoord(mc.player.getBlockX()) + x, SectionPos.blockToSectionCoord(mc.player.getBlockZ()) + z);
+                                if (c.getBlockEntities().values().stream().anyMatch((e) -> e instanceof BellBlockEntity)) {
+                                    isInVillage = true;
+                                    break;
+                                }
+                            }
+                            if (isInVillage)
+                                break;
+                        }
                     }
                 }
             }
@@ -85,6 +98,7 @@ public class CommonClass {
                     AmbientWaterBlockSoundsPlayer.RIVER_LOOP.fadeOut();
                 }
             }
+            timeSincePlains++;
             timeSinceNightIdle++;
             timeSinceJungle++;
             timeSinceAddition++;

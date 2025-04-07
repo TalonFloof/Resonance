@@ -66,6 +66,14 @@
       {"name":"resonance:forest/forest_dawn2", "volume": 0.2}
     ]
   },
+  "ambient.plains.idle": {
+    "category": "ambiance",
+    "sounds": [
+      "resonance:plains/idle1",
+      "resonance:plains/idle2",
+      "resonance:plains/idle3"
+    ]
+  },
   "ambient.plains.tree_additions": {
     "category": "block",
     "sounds": [

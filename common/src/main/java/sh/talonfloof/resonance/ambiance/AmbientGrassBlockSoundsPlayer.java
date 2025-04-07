@@ -21,11 +21,13 @@ import sh.talonfloof.resonance.config.ResonanceConfig;
 import java.util.Iterator;
 
 import static sh.talonfloof.resonance.CommonClass.config;
+import static sh.talonfloof.resonance.Constants.LOG;
 import static sh.talonfloof.resonance.Constants.dayTime;
 
 public class AmbientGrassBlockSoundsPlayer {
     private static final int SURROUNDING_BLOCKS_PLAY_SOUND_THRESHOLD = 3;
     private static final int SURROUNDING_BLOCKS_DISTANCE_CHECK = 8;
+    public static final SoundEvent PLAINS_IDLE = SoundEvent.createVariableRangeEvent(Constants.path("ambient.plains.idle"));
     public static final SoundEvent NIGHT_IDLE = SoundEvent.createVariableRangeEvent(Constants.path("ambient.grass.night_idle"));
     public static final SoundEvent JUNGLE_NIGHT_IDLE = SoundEvent.createVariableRangeEvent(Constants.path("ambient.jungle.night_idle"));
     public static final SoundEvent JUNGLE_IDLE = SoundEvent.createVariableRangeEvent(Constants.path("ambient.jungle.idle"));
@@ -50,6 +52,10 @@ public class AmbientGrassBlockSoundsPlayer {
                     CommonClass.timeSinceAddition = 0;
                 }
             } else {
+                if(Minecraft.getInstance().player.getPosition(0).distanceTo(pos.getCenter()) <= 8 && (biome.is(Constants.IS_PLAINS) || biome.is(BiomeTags.IS_SAVANNA)) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSincePlains >= 9*20) {
+                    level.playLocalSound((double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), PLAINS_IDLE, SoundSource.AMBIENT, 0.25F, 1.0F, false);
+                    CommonClass.timeSincePlains = 0;
+                }
                 if (Minecraft.getInstance().player.getPosition(0).distanceTo(pos.getCenter()) <= 8 && biome.is(BiomeTags.IS_JUNGLE) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSinceJungle >= (9*20)+10) {
                     level.playLocalSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), JUNGLE_IDLE, SoundSource.AMBIENT, 0.5F, 1.0F, false);
                     CommonClass.timeSinceJungle = 0;
