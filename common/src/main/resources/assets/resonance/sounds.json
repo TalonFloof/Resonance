@@ -20,6 +20,15 @@
       "resonance:forest/forest_addition6"
     ]
   },
+  "ambient.forest.winter_additions": {
+    "category": "ambiance",
+    "sounds": [
+      {"name": "resonance:forest/forest_addition3", "volume": 0.5},
+      {"name": "resonance:forest/forest_addition4", "volume": 0.5},
+      "resonance:forest/forest_addition5",
+      "resonance:forest/forest_addition6"
+    ]
+  },
   "ambient.forest.night_additions": {
     "category": "ambiance",
     "sounds": [
@@ -88,6 +97,12 @@
       "resonance:night1",
       "resonance:night2",
       "resonance:night3"
+    ]
+  },
+  "ambient.winter": {
+    "category": "ambiance",
+    "sounds": [
+      "resonance:snowy/idle"
     ]
   },
   "ambient.river": {

@@ -12,6 +12,7 @@ import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.level.block.entity.BellBlockEntity;
 import net.minecraft.world.phys.AABB;
 import sh.talonfloof.resonance.ambiance.AmbientWaterBlockSoundsPlayer;
+import sh.talonfloof.resonance.compat.SeasonCompat;
 import sh.talonfloof.resonance.config.ResonanceConfig;
 import sh.talonfloof.resonance.platform.Services;
 
@@ -20,12 +21,20 @@ import static sh.talonfloof.resonance.ambiance.AmbientWaterBlockSoundsPlayer.OCE
 
 public class CommonClass {
     public static ResonanceConfig config = ConfigApiJava.registerAndLoadConfig(ResonanceConfig::new, RegisterType.CLIENT);
+    public static boolean hasSereneSeasons = false;
 
     public static void init() {
         Constants.LOG.info("Resonance on {}", Services.PLATFORM.getPlatformName());
+        if(Services.PLATFORM.isModLoaded("sereneseasons"))
+            hasSereneSeasons = true;
+        if(hasSereneSeasons) {
+            Constants.LOG.info("Enabled Serene Seasons compatibility with Resonance!");
+        }
     }
 
+    public static BiomeAmbientSoundsHandler.LoopSoundInstance WINTER_LOOP = null;
     public static BiomeAmbientSoundsHandler.LoopSoundInstance OCEAN_LOOP = null;
+    public static final SoundEvent WINTER_IDLE = SoundEvent.createVariableRangeEvent(Constants.path("ambient.winter"));
     public static final SoundEvent VILLAGE_ADDITIONS = SoundEvent.createVariableRangeEvent(Constants.path("ambient.village.additions"));
     public static final SoundEvent VILLAGE_ROOSTER = SoundEvent.createVariableRangeEvent(Constants.path("ambient.village.rooster"));
 
@@ -34,8 +43,9 @@ public class CommonClass {
     public static long timeSinceJungle = 0;
     public static long timeSinceNightIdle = 0;
     public static long timeSincePlains = 0;
-    public static long villageScanInterval = 0;
+    public static long villageScanInterval = 19;
     public static boolean isInVillage = false;
+    public static boolean isOutside = false;
 
     public static void onClientTick() {
         Minecraft mc = Minecraft.getInstance();
@@ -46,6 +56,8 @@ public class CommonClass {
             if(villageScanInterval % 20 == 0) {
                 isInVillage = false;
                 villageScanInterval = 0;
+                // Also go ahead and check if we're outside
+                isOutside = Constants.isOutside(mc.player);
                 if (mc.level.dimensionType().natural()) {
                     var playerEyes = mc.player.getEyePosition();
                     AABB box = AABB.unitCubeFromLowerCorner(playerEyes).inflate(64);
@@ -65,9 +77,7 @@ public class CommonClass {
                     }
                 }
             }
-            if(mc.level.getRainLevel(0) > 0)
-                return;
-            if(isInVillage) {
+            if(isInVillage && mc.level.getRainLevel(0) == 0) {
                 if(dayTime(mc.level) == 5) {
                     mc.player.playSound(VILLAGE_ROOSTER,10000000.0F,1.0F);
                 }
@@ -76,7 +86,7 @@ public class CommonClass {
                 }
             }
             var biome = mc.level.getBiome(new BlockPos(mc.player.getBlockX(),mc.player.getBlockY(),mc.player.getBlockZ()));
-            if(mc.player.getBlockY() >= 50 && (biome.is(BiomeTags.IS_BEACH) || biome.is(BiomeTags.IS_OCEAN) || biome.is(BiomeTags.IS_DEEP_OCEAN))) {
+            if(mc.player.getBlockY() >= 50 && (biome.is(BiomeTags.IS_BEACH) || biome.is(BiomeTags.IS_OCEAN) || biome.is(BiomeTags.IS_DEEP_OCEAN)) && mc.level.getRainLevel(0) <= 0) {
                 if(OCEAN_LOOP == null || OCEAN_LOOP.isStopped()) {
                     OCEAN_LOOP = new BiomeAmbientSoundsHandler.LoopSoundInstance(OCEAN_IDLE);
                     OCEAN_LOOP.fadeIn();
@@ -96,6 +106,19 @@ public class CommonClass {
                 timeSinceRiverTick++;
                 if (timeSinceRiverTick >= 20) {
                     AmbientWaterBlockSoundsPlayer.RIVER_LOOP.fadeOut();
+                }
+            }
+            if(SeasonCompat.getCurrentSeason(mc.level) == SeasonCompat.Season.WINTER && isOutside && !SeasonCompat.inTropicalBiome(mc.player)) {
+                if(WINTER_LOOP == null || WINTER_LOOP.isStopped()) {
+                    WINTER_LOOP = new BiomeAmbientSoundsHandler.LoopSoundInstance(WINTER_IDLE);
+                    WINTER_LOOP.fadeIn();
+                    WINTER_LOOP.fade = 0;
+                    WINTER_LOOP.volume = 0.01F;
+                    Minecraft.getInstance().getSoundManager().play(WINTER_LOOP);
+                }
+            } else {
+                if (WINTER_LOOP != null && WINTER_LOOP.fadeDirection != -1) {
+                    WINTER_LOOP.fadeOut();
                 }
             }
             timeSincePlains++;

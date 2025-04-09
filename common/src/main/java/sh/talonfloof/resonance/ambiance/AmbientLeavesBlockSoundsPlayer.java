@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import sh.talonfloof.resonance.CommonClass;
 import sh.talonfloof.resonance.Constants;
+import sh.talonfloof.resonance.compat.SeasonCompat;
 import sh.talonfloof.resonance.config.ResonanceConfig;
 
 import java.util.Iterator;
@@ -26,6 +27,7 @@ public class AmbientLeavesBlockSoundsPlayer {
     public static final SoundEvent FOREST_IDLE = SoundEvent.createVariableRangeEvent(Constants.path("ambient.forest.idle"));
     public static final SoundEvent FOREST_NIGHT_ADDITIONS = SoundEvent.createVariableRangeEvent(Constants.path("ambient.forest.night_additions"));
     public static final SoundEvent FOREST_ADDITIONS = SoundEvent.createVariableRangeEvent(Constants.path("ambient.forest.additions"));
+    public static final SoundEvent FOREST_WINTER_ADDITIONS = SoundEvent.createVariableRangeEvent(Constants.path("ambient.forest.winter_additions"));
     public static final SoundEvent JUNGLE_ADDITIONS = SoundEvent.createVariableRangeEvent(Constants.path("ambient.jungle.additions"));
     public static final SoundEvent FOREST_DAWN = SoundEvent.createVariableRangeEvent(Constants.path("ambient.forest.dawn"));
 
@@ -33,7 +35,8 @@ public class AmbientLeavesBlockSoundsPlayer {
         if (state.is(BlockTags.LEAVES) && pos.getY() > 63) {
             if(level.getRainLevel(0) > 0)
                 return;
-            if (rsource.nextInt(config.ambiance.leavesIdleChance) == 0 && dayTime(level) < 13000) {
+            var season = SeasonCompat.getCurrentSeason(level);
+            if (rsource.nextInt(config.ambiance.leavesIdleChance) == 0 && dayTime(level) < 13000 && season != SeasonCompat.Season.WINTER) {
                 var b = level.getBiome(pos);
                 if(b.is(BiomeTags.IS_JUNGLE) || b.is(Constants.IS_SWAMP))
                     return;
@@ -44,13 +47,13 @@ public class AmbientLeavesBlockSoundsPlayer {
                 var b = level.getBiome(pos);
                 if(isInAmbientSoundBiome(b)) {
                     if(dayTime(level) < 12000) {
-                        level.playPlayerSound(FOREST_ADDITIONS, SoundSource.AMBIENT, 1.0F, 1.0F);
+                        level.playPlayerSound(season == SeasonCompat.Season.WINTER ? FOREST_WINTER_ADDITIONS : FOREST_ADDITIONS, SoundSource.AMBIENT, 1.0F, 1.0F);
                         CommonClass.timeSinceAddition = 0;
-                    } else if(dayTime(level) < 22500) {
+                    } else if(dayTime(level) < 22500 && SeasonCompat.getCurrentSeason(level) != SeasonCompat.Season.WINTER) {
                         level.playPlayerSound(FOREST_NIGHT_ADDITIONS, SoundSource.AMBIENT, 1.0F, 1.0F);
                         CommonClass.timeSinceAddition = 0;
                     }
-                } else if(dayTime(level) < 12000 && b.is(Constants.IS_PLAINS)) {
+                } else if(dayTime(level) < 12000 && b.is(Constants.IS_PLAINS) && season != SeasonCompat.Season.WINTER) {
                     level.playPlayerSound(PLAINS_TREE_ADDITIONS, SoundSource.AMBIENT, 1.0F, 1.0F);
                     CommonClass.timeSinceAddition = 0;
                 } else if(dayTime(level) < 12000 && b.is(BiomeTags.IS_JUNGLE)) {

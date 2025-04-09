@@ -16,6 +16,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import sh.talonfloof.resonance.CommonClass;
 import sh.talonfloof.resonance.Constants;
+import sh.talonfloof.resonance.compat.SeasonCompat;
 import sh.talonfloof.resonance.config.ResonanceConfig;
 
 import static sh.talonfloof.resonance.CommonClass.config;
@@ -30,7 +31,7 @@ public class AmbientWaterBlockSoundsPlayer {
 
     public static void playAmbientBlockSounds(FluidState state, Level level, BlockPos pos, RandomSource rsource) {
         if (state.is(Fluids.WATER) && pos.getY() >= 60) {
-            if(level.getRainLevel(0) > 0)
+            if(level.getRainLevel(0) > 0 || SeasonCompat.getCurrentSeason(level) == SeasonCompat.Season.WINTER)
                 return;
             if(rsource.nextInt(config.ambiance.swampIdleChance) == 0 && level.getBiome(pos).is(Constants.IS_SWAMP)) {
                 level.playLocalSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), SWAMP_IDLE, SoundSource.AMBIENT, 1.0F, 1.0F, false);

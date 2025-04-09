@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
 import sh.talonfloof.resonance.CommonClass;
 import sh.talonfloof.resonance.Constants;
+import sh.talonfloof.resonance.compat.SeasonCompat;
 import sh.talonfloof.resonance.config.ResonanceConfig;
 
 import java.util.Iterator;
@@ -39,7 +40,7 @@ public class AmbientGrassBlockSoundsPlayer {
                 return;
             var biome = level.getBiome(pos);
             if(dayTime(level) > 13000) {
-                if(isInAmbientSoundBiome(biome) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSinceNightIdle >= 8*20) {
+                if(isInAmbientSoundBiome(biome) && shouldPlayAmbientSound(level, pos) && SeasonCompat.getCurrentSeason(level).ordinal() < 2 && CommonClass.timeSinceNightIdle >= 8*20) {
                     level.playLocalSound((double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), NIGHT_IDLE, SoundSource.AMBIENT, 1.0F, 1.0F, false);
                     CommonClass.timeSinceNightIdle = 0;
                 }
@@ -52,7 +53,7 @@ public class AmbientGrassBlockSoundsPlayer {
                     CommonClass.timeSinceAddition = 0;
                 }
             } else {
-                if(Minecraft.getInstance().player.getPosition(0).distanceTo(pos.getCenter()) <= 8 && (biome.is(Constants.IS_PLAINS) || biome.is(BiomeTags.IS_SAVANNA)) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSincePlains >= 9*20) {
+                if(Minecraft.getInstance().player.getPosition(0).distanceTo(pos.getCenter()) <= 8 && ((biome.is(Constants.IS_PLAINS) && SeasonCompat.getCurrentSeason(level) != SeasonCompat.Season.WINTER) || biome.is(BiomeTags.IS_SAVANNA)) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSincePlains >= 9*20) {
                     level.playLocalSound((double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), PLAINS_IDLE, SoundSource.AMBIENT, 0.25F, 1.0F, false);
                     CommonClass.timeSincePlains = 0;
                 }
