@@ -17,6 +17,7 @@ import java.util.Objects;
 
 import static sh.talonfloof.resonance.CommonClass.config;
 
+// Some code used here is derived from https://github.com/netcatgirl/ImmersiveThunder/blob/1.21.4/common/src/main/java/com/netcatgirl/immersivethunder/mixin/ImmersiveThunderMixin.java
 @Mixin(LightningBolt.class)
 public class LightningBoltMixin {
     @Unique

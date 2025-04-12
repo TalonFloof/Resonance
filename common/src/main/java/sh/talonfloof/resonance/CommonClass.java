@@ -35,6 +35,8 @@ public class CommonClass {
 
     public static BiomeAmbientSoundsHandler.LoopSoundInstance WINTER_LOOP = null;
     public static BiomeAmbientSoundsHandler.LoopSoundInstance OCEAN_LOOP = null;
+    public static BiomeAmbientSoundsHandler.LoopSoundInstance DESERT_LOOP = null;
+    public static final SoundEvent DESERT_IDLE = SoundEvent.createVariableRangeEvent(Constants.path("ambient.desert.idle"));
     public static final SoundEvent WINTER_IDLE = SoundEvent.createVariableRangeEvent(Constants.path("ambient.winter"));
     public static final SoundEvent VILLAGE_ADDITIONS = SoundEvent.createVariableRangeEvent(Constants.path("ambient.village.additions"));
     public static final SoundEvent VILLAGE_ROOSTER = SoundEvent.createVariableRangeEvent(Constants.path("ambient.village.rooster"));
@@ -98,7 +100,23 @@ public class CommonClass {
                 }
             }
             var biome = mc.level.getBiome(new BlockPos(mc.player.getBlockX(),mc.player.getBlockY(),mc.player.getBlockZ()));
-            if(mc.player.getBlockY() >= 50 && (biome.is(BiomeTags.IS_BEACH) || biome.is(BiomeTags.IS_OCEAN) || biome.is(BiomeTags.IS_DEEP_OCEAN)) && mc.level.getRainLevel(0) <= 0) {
+            if(isOutside && Constants.isDesert(biome) && dayTime(mc.level) < 13000 && mc.level.getRainLevel(0) <= 0) {
+                if(DESERT_LOOP == null || DESERT_LOOP.isStopped()) {
+                    DESERT_LOOP = new BiomeAmbientSoundsHandler.LoopSoundInstance(DESERT_IDLE);
+                    DESERT_LOOP.fadeIn();
+                    DESERT_LOOP.fade = 0;
+                    DESERT_LOOP.volume = 0.01F;
+                    Minecraft.getInstance().getSoundManager().play(DESERT_LOOP);
+                }
+                if (DESERT_LOOP != null && DESERT_LOOP.fade >= 0) {
+                    DESERT_LOOP.fadeIn();
+                }
+            } else {
+                if (DESERT_LOOP != null && DESERT_LOOP.fadeDirection != -1) {
+                    DESERT_LOOP.fadeOut();
+                }
+            }
+            if(config.ambiance.enableOceanSounds & mc.player.getBlockY() >= 50 && (Constants.isBeach(biome) || Constants.isOcean(biome)) && mc.level.getRainLevel(0) <= 0) {
                 if(OCEAN_LOOP == null || OCEAN_LOOP.isStopped()) {
                     OCEAN_LOOP = new BiomeAmbientSoundsHandler.LoopSoundInstance(OCEAN_IDLE);
                     OCEAN_LOOP.fadeIn();
@@ -120,7 +138,7 @@ public class CommonClass {
                     AmbientWaterBlockSoundsPlayer.RIVER_LOOP.fadeOut();
                 }
             }
-            if((biome.is(Constants.IS_SNOWY) || SeasonCompat.getCurrentSeason(mc.level) == SeasonCompat.Season.WINTER) && isOutside && !SeasonCompat.inTropicalBiome(mc.player)) {
+            if((Constants.isSnowy(biome) || SeasonCompat.getCurrentSeason(mc.level) == SeasonCompat.Season.WINTER) && isOutside && !SeasonCompat.inTropicalBiome(mc.player)) {
                 if(WINTER_LOOP == null || WINTER_LOOP.isStopped()) {
                     WINTER_LOOP = new BiomeAmbientSoundsHandler.LoopSoundInstance(WINTER_IDLE);
                     WINTER_LOOP.fadeIn();

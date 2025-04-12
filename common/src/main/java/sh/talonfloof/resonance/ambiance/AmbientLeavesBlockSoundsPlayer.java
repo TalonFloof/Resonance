@@ -20,6 +20,7 @@ import sh.talonfloof.resonance.config.ResonanceConfig;
 import java.util.Iterator;
 
 import static sh.talonfloof.resonance.CommonClass.config;
+import static sh.talonfloof.resonance.CommonClass.isOutside;
 import static sh.talonfloof.resonance.Constants.dayTime;
 
 public class AmbientLeavesBlockSoundsPlayer {
@@ -36,14 +37,14 @@ public class AmbientLeavesBlockSoundsPlayer {
             if(level.getRainLevel(0) > 0)
                 return;
             var season = SeasonCompat.getCurrentSeason(level);
-            if (rsource.nextInt(config.ambiance.leavesIdleChance) == 0 && dayTime(level) < 13000 && season != SeasonCompat.Season.WINTER) {
+            if (isOutside && rsource.nextInt(config.ambiance.leavesIdleChance) == 0 && dayTime(level) < 13000 && season != SeasonCompat.Season.WINTER) {
                 var b = level.getBiome(pos);
-                if(b.is(BiomeTags.IS_JUNGLE) || b.is(Constants.IS_SWAMP))
+                if(Constants.isJungle(b) || Constants.isSwamp(b))
                     return;
                 level.playLocalSound((double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), FOREST_IDLE, SoundSource.AMBIENT, 1.0F, 1.0F, false);
             }
 
-            if (rsource.nextInt(config.ambiance.leavesAdditionsChance) == 0 && CommonClass.timeSinceAddition >= 40) {
+            if (isOutside && rsource.nextInt(config.ambiance.leavesAdditionsChance) == 0 && CommonClass.timeSinceAddition >= 40) {
                 var b = level.getBiome(pos);
                 if(isInAmbientSoundBiome(b)) {
                     if(dayTime(level) < 12000) {
@@ -53,15 +54,15 @@ public class AmbientLeavesBlockSoundsPlayer {
                         level.playPlayerSound(FOREST_NIGHT_ADDITIONS, SoundSource.AMBIENT, 1.0F, 1.0F);
                         CommonClass.timeSinceAddition = 0;
                     }
-                } else if(dayTime(level) < 12000 && b.is(Constants.IS_PLAINS) && season != SeasonCompat.Season.WINTER) {
+                } else if(dayTime(level) < 12000 && Constants.isPlains(b) && season != SeasonCompat.Season.WINTER) {
                     level.playPlayerSound(PLAINS_TREE_ADDITIONS, SoundSource.AMBIENT, 1.0F, 1.0F);
                     CommonClass.timeSinceAddition = 0;
-                } else if(dayTime(level) < 12000 && b.is(BiomeTags.IS_JUNGLE)) {
+                } else if(dayTime(level) < 12000 && Constants.isJungle(b)) {
                     level.playPlayerSound(JUNGLE_ADDITIONS, SoundSource.AMBIENT, 1.0F, 1.0F);
                     CommonClass.timeSinceAddition = 0;
                 }
             }
-            if (rsource.nextInt(config.ambiance.leavesDawnAdditionsChance) == 0 && isInAmbientSoundBiome(level.getBiome(pos)) && dayTime(level) > 20000 && CommonClass.timeSinceAddition >= 40) {
+            if (isOutside && rsource.nextInt(config.ambiance.leavesDawnAdditionsChance) == 0 && isInAmbientSoundBiome(level.getBiome(pos)) && dayTime(level) > 20000 && CommonClass.timeSinceAddition >= 40) {
                 level.playPlayerSound(FOREST_DAWN, SoundSource.AMBIENT, 1.0F, 1.0F);
                 CommonClass.timeSinceAddition = 0;
             }
@@ -70,6 +71,6 @@ public class AmbientLeavesBlockSoundsPlayer {
     }
 
     private static boolean isInAmbientSoundBiome(Holder<Biome> biome) {
-        return biome.is(BiomeTags.IS_FOREST) || biome.is(BiomeTags.IS_TAIGA);
+        return Constants.isForest(biome) || Constants.isTaiga(biome);
     }
 }

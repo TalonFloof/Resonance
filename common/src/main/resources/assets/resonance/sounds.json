@@ -93,6 +93,12 @@
       "resonance:night3"
     ]
   },
+  "ambient.desert.idle": {
+    "category": "ambiance",
+    "sounds": [
+      "resonance:desert/idle"
+    ]
+  },
   "ambient.winter": {
     "category": "ambiance",
     "sounds": [

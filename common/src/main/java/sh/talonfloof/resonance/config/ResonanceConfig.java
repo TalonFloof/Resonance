@@ -27,6 +27,8 @@ public class ResonanceConfig extends Config {
         public boolean enableOceanSounds = true;
         @Comment("Sets if the jungle loop sounds should be played")
         public boolean enableJungleIdle = true;
+        @Comment("Sets if the plains and savanna ambient loop sound should be played")
+        public boolean enablePlainsSavannaIdle = true;
         @Comment("The chance of hearing ambient village noises (1 in x)")
         public int villageAdditionsChance = 500;
     }

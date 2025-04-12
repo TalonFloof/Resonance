@@ -17,11 +17,11 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import sh.talonfloof.resonance.CommonClass;
 import sh.talonfloof.resonance.Constants;
 import sh.talonfloof.resonance.compat.SeasonCompat;
-import sh.talonfloof.resonance.config.ResonanceConfig;
 
 import java.util.Iterator;
 
 import static sh.talonfloof.resonance.CommonClass.config;
+import static sh.talonfloof.resonance.CommonClass.isOutside;
 import static sh.talonfloof.resonance.Constants.LOG;
 import static sh.talonfloof.resonance.Constants.dayTime;
 
@@ -39,25 +39,26 @@ public class AmbientGrassBlockSoundsPlayer {
             if(level.getRainLevel(0) > 0)
                 return;
             var biome = level.getBiome(pos);
+            var closeToPlayer = Minecraft.getInstance().player.getPosition(0).distanceTo(pos.getCenter()) <= 8;
             if(dayTime(level) > 13000) {
-                if(config.ambiance.enableNightIdle && isInAmbientSoundBiome(biome) && shouldPlayAmbientSound(level, pos) && SeasonCompat.getCurrentSeason(level).ordinal() < 2 && CommonClass.timeSinceNightIdle >= 8*20) {
+                if(config.ambiance.enableNightIdle && isOutside && isInAmbientSoundBiome(biome) && shouldPlayAmbientSound(level, pos) && SeasonCompat.getCurrentSeason(level).ordinal() < 2 && CommonClass.timeSinceNightIdle >= 8*20) {
                     level.playLocalSound((double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), NIGHT_IDLE, SoundSource.AMBIENT, 1.0F, 1.0F, false);
                     CommonClass.timeSinceNightIdle = 0;
                 }
-                if (config.ambiance.enableJungleIdle && Minecraft.getInstance().player.getPosition(0).distanceTo(pos.getCenter()) <= 8 && biome.is(BiomeTags.IS_JUNGLE) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSinceJungle >= (9*20)+10) {
+                if (config.ambiance.enableJungleIdle && isOutside && closeToPlayer && Constants.isJungle(biome) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSinceJungle >= (9*20)+10) {
                     level.playLocalSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), JUNGLE_NIGHT_IDLE, SoundSource.AMBIENT, 1.0F, 1.0F, false);
                     CommonClass.timeSinceJungle = 0;
                 }
-                if(rsource.nextInt(config.ambiance.forestWolfChance) == 0 && biome.is(BiomeTags.IS_FOREST) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSinceAddition >= 40) {
+                if(rsource.nextInt(config.ambiance.forestWolfChance) == 0 && Constants.isForest(biome) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSinceAddition >= 40) {
                     level.playLocalSound((double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), NIGHT_WOLF, SoundSource.AMBIENT, 1.0F, 1.0F, false);
                     CommonClass.timeSinceAddition = 0;
                 }
             } else {
-                if(Minecraft.getInstance().player.getPosition(0).distanceTo(pos.getCenter()) <= 8 && ((biome.is(Constants.IS_PLAINS) && SeasonCompat.getCurrentSeason(level) != SeasonCompat.Season.WINTER) || biome.is(BiomeTags.IS_SAVANNA)) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSincePlains >= 9*20) {
+                if(isOutside && closeToPlayer && ((Constants.isPlains(biome) && SeasonCompat.getCurrentSeason(level) != SeasonCompat.Season.WINTER) || Constants.isSavanna(biome)) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSincePlains >= 9*20) {
                     level.playLocalSound((double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), PLAINS_IDLE, SoundSource.AMBIENT, 0.25F, 1.0F, false);
                     CommonClass.timeSincePlains = 0;
                 }
-                if (Minecraft.getInstance().player.getPosition(0).distanceTo(pos.getCenter()) <= 8 && biome.is(BiomeTags.IS_JUNGLE) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSinceJungle >= (9*20)+10) {
+                if (isOutside && closeToPlayer && Constants.isJungle(biome) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSinceJungle >= (9*20)+10) {
                     level.playLocalSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), JUNGLE_IDLE, SoundSource.AMBIENT, 0.5F, 1.0F, false);
                     CommonClass.timeSinceJungle = 0;
                 }
@@ -66,7 +67,7 @@ public class AmbientGrassBlockSoundsPlayer {
     }
 
     private static boolean isInAmbientSoundBiome(Holder<Biome> biome) {
-        return !biome.is(BiomeTags.IS_JUNGLE) && !biome.is(Constants.IS_SWAMP) && (biome.is(BiomeTags.IS_FOREST) || biome.is(Constants.IS_PLAINS) || biome.is(BiomeTags.IS_TAIGA) || biome.is(BiomeTags.IS_SAVANNA));
+        return !Constants.isJungle(biome) && !Constants.isSwamp(biome) && (Constants.isForest(biome) || Constants.isPlains(biome) || Constants.isTaiga(biome) || Constants.isSavanna(biome));
     }
 
     private static boolean shouldPlayAmbientSound(Level level, BlockPos pos) {

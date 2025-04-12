@@ -33,10 +33,10 @@ public class AmbientWaterBlockSoundsPlayer {
         if (state.is(Fluids.WATER) && pos.getY() >= 60) {
             if(level.getRainLevel(0) > 0 || SeasonCompat.getCurrentSeason(level) == SeasonCompat.Season.WINTER)
                 return;
-            if(rsource.nextInt(config.ambiance.swampIdleChance) == 0 && level.getBiome(pos).is(Constants.IS_SWAMP)) {
+            if(rsource.nextInt(config.ambiance.swampIdleChance) == 0 && Constants.isSwamp(level.getBiome(pos))) {
                 level.playLocalSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), SWAMP_IDLE, SoundSource.AMBIENT, 1.0F, 1.0F, false);
             }
-            if(level.getBiome(pos).is(BiomeTags.IS_RIVER)) {
+            if(config.ambiance.enableRiverSounds && Constants.isRiver(level.getBiome(pos))) {
                 if(Minecraft.getInstance().player.getPosition(0).distanceTo(pos.getCenter()) <= 8) {
                     if (RIVER_LOOP == null || (RIVER_LOOP.fade < 0 && RIVER_LOOP.fadeDirection == -1)) {
                         RIVER_LOOP = new BiomeAmbientSoundsHandler.LoopSoundInstance(RIVER);

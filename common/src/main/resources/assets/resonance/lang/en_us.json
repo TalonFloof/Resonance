@@ -20,6 +20,7 @@
   "resonance.client.ambiance.enableOceanSounds": "Play Ocean Ambient Loop",
   "resonance.client.ambiance.enableOceanSounds.desc": "Sets if the ocean loop sound should be played",
   "resonance.client.ambiance.enableJungleIdle": "Play Jungle Ambient Loop",
+  "resonance.client.ambiance.enablePlainsSavannaIdle": "Play Plains/Savanna Ambient Loop",
   "resonance.client.ambiance.villageAdditionsChance.desc": "The chance of hearing ambient village noises (1 in x)",
   "resonance.client.weather": "Weather",
   "resonance.client.weather.newThunderSounds": "Play New Thunder Sounds",
