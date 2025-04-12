@@ -44,7 +44,7 @@ neoForge {
 
 dependencies {
     implementation "me.fzzyhmstrs:fzzy_config:${project.fzzy_version}+${project.minecraft_version}+neoforge"
-    compileOnly("maven.modrinth:serene-seasons:${project.serene_seasons_version}-neoforge,${project.minecraft_version}")
+    implementation "maven.modrinth:serene-seasons:${project.serene_seasons_version}-neoforge,${project.minecraft_version}"
     implementation 'com.github.glitchfiend:GlitchCore-neoforge:' + minecraft_version + '-' + glitchcore_version
 }
 
