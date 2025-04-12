@@ -1,10 +1,4 @@
 {
-  "resonance.sound.ambient.forest.idle": "Leaves rustling",
-  "resonance.sound.ambient.forest.dawn": "Robin sings",
-  "resonance.sound.ambient.grass.night_idle": "Distant insects chirp",
-  "resonance.sound.ambient.swamp.idle": "Swamp Water flows",
-  "resonance.sound.ambient.river": "River Water flows",
-  "resonance.sound.ambient.forest.night_wolf": "Wolf howls in distance",
   "resonance.sound.ambient.thunder.close": "Nearby lightning claps",
   "resonance.sound.ambient.thunder.medium": "Lightning claps",
   "resonance.sound.ambient.thunder.far": "Distant Lightning roars",
@@ -25,6 +19,7 @@
   "resonance.client.ambiance.swampIdleChance.desc": "The chance of hearing ambient swamp noises (1 in x)",
   "resonance.client.ambiance.enableOceanSounds": "Play Ocean Ambient Loop",
   "resonance.client.ambiance.enableOceanSounds.desc": "Sets if the ocean loop sound should be played",
+  "resonance.client.ambiance.enableJungleIdle": "Play Jungle Ambient Loop",
   "resonance.client.ambiance.villageAdditionsChance.desc": "The chance of hearing ambient village noises (1 in x)",
   "resonance.client.weather": "Weather",
   "resonance.client.weather.newThunderSounds": "Play New Thunder Sounds",

@@ -24,6 +24,7 @@ public class Constants {
 
 	public static final TagKey<Biome> IS_PLAINS = TagKey.create(Registries.BIOME,ResourceLocation.parse("c:is_plains"));
 	public static final TagKey<Biome> IS_SWAMP = TagKey.create(Registries.BIOME,ResourceLocation.parse("c:is_swamp"));
+	public static final TagKey<Biome> IS_SNOWY = TagKey.create(Registries.BIOME,ResourceLocation.parse("c:is_snowy"));
 
 	public static long dayTime(Level l) {
 		return l.getDayTime() % 24000;

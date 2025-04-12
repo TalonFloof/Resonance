@@ -1,6 +1,5 @@
 {
   "ambient.forest.idle": {
-    "subtitle": "resonance.sound.ambient.forest.idle",
     "category": "ambiance",
     "sounds": [
       "resonance:leaves1",
@@ -37,7 +36,6 @@
     ]
   },
   "ambient.jungle.idle": {
-    "subtitle": "resonance.sound.ambient.jungle.idle",
     "category": "ambiance",
     "sounds": [
       "resonance:jungle/idle1",
@@ -45,7 +43,6 @@
     ]
   },
   "ambient.jungle.night_idle": {
-    "subtitle": "resonance.sound.ambient.jungle.night_idle",
     "category": "ambiance",
     "sounds": [
       "resonance:jungle/night_idle1",
@@ -63,13 +60,11 @@
   },
   "ambient.forest.night_wolf": {
     "category": "ambiance",
-    "subtitle": "resonance.sound.ambient.forest.night_wolf",
     "sounds": [
       "resonance:forest/forest_night_addition3"
     ]
   },
   "ambient.forest.dawn": {
-    "subtitle": "resonance.sound.ambient.forest.dawn",
     "category": "ambiance",
     "sounds": [
       {"name":"resonance:forest/forest_dawn2", "volume": 0.2}
@@ -91,7 +86,6 @@
     ]
   },
   "ambient.grass.night_idle": {
-    "subtitle": "resonance.sound.ambient.grass.night_idle",
     "category": "ambiance",
     "sounds": [
       "resonance:night1",
@@ -106,14 +100,12 @@
     ]
   },
   "ambient.river": {
-    "subtitle": "resonance.sound.ambient.river",
     "category": "ambiance",
     "sounds": [
       "resonance:river"
     ]
   },
   "ambient.ocean": {
-    "subtitle": "resonance.sound.ambient.ocean",
     "category": "ambiance",
     "sounds": [
       "resonance:ocean/loop"
@@ -145,7 +137,6 @@
   },
   "ambient.swamp.idle": {
     "category": "ambiance",
-    "subtitle": "resonance.sound.ambient.swamp.idle",
     "sounds": [
       "resonance:swamp/idle1",
       "resonance:swamp/idle2",
@@ -162,7 +153,6 @@
     ]
   },
   "ambient.village.rooster": {
-    "subtitle": "resonance.sound.ambient.village.rooster",
     "category": "ambiance",
     "sounds": [
       "resonance:village/rooster1"

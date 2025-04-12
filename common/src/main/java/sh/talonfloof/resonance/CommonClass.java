@@ -3,6 +3,7 @@ package sh.talonfloof.resonance;
 import me.fzzyhmstrs.fzzy_config.api.ConfigApiJava;
 import me.fzzyhmstrs.fzzy_config.api.RegisterType;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.resources.sounds.BiomeAmbientSoundsHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
@@ -46,6 +47,7 @@ public class CommonClass {
     public static long villageScanInterval = 19;
     public static boolean isInVillage = false;
     public static boolean isOutside = false;
+    public static int previousDay = 0;
 
     public static void onClientTick() {
         Minecraft mc = Minecraft.getInstance();
@@ -54,6 +56,7 @@ public class CommonClass {
         if(mc.level != null) {
             villageScanInterval++;
             if(villageScanInterval % 20 == 0) {
+                boolean prevInVillage = isInVillage;
                 isInVillage = false;
                 villageScanInterval = 0;
                 // Also go ahead and check if we're outside
@@ -76,13 +79,22 @@ public class CommonClass {
                         }
                     }
                 }
+                if(!prevInVillage && isInVillage && mc.level.dayTime() / 24000 != previousDay) // Prevent the rooster sound from playing if the day changed, and we previously weren't in a village
+                    previousDay = (int)(mc.level.dayTime() / 24000);
             }
-            if(isInVillage && mc.level.getRainLevel(0) == 0) {
-                if(dayTime(mc.level) == 5) {
-                    mc.player.playSound(VILLAGE_ROOSTER,10000000.0F,1.0F);
-                }
-                if(mc.level.getRandom().nextInt(config.ambiance.villageAdditionsChance) == 0 && dayTime(mc.level) < 12000) {
-                    mc.player.playSound(VILLAGE_ADDITIONS,10000000.0F,1.0F);
+            if(isInVillage) {
+                if(mc.level.getRainLevel(0) == 0) {
+                    if (mc.level.dayTime() / 24000 != previousDay) {
+                        mc.player.playSound(VILLAGE_ROOSTER, 10000000.0F, 1.0F);
+                        previousDay = (int) (mc.level.dayTime() / 24000);
+                    }
+                    if (mc.level.getRandom().nextInt(config.ambiance.villageAdditionsChance) == 0 && dayTime(mc.level) < 12000) {
+                        mc.player.playSound(VILLAGE_ADDITIONS, 10000000.0F, 1.0F);
+                    }
+                } else {
+                    if (mc.level.dayTime() / 24000 != previousDay) { // Prevent a delayed rooster sound due to rain
+                        previousDay = (int) (mc.level.dayTime() / 24000);
+                    }
                 }
             }
             var biome = mc.level.getBiome(new BlockPos(mc.player.getBlockX(),mc.player.getBlockY(),mc.player.getBlockZ()));
@@ -108,7 +120,7 @@ public class CommonClass {
                     AmbientWaterBlockSoundsPlayer.RIVER_LOOP.fadeOut();
                 }
             }
-            if(SeasonCompat.getCurrentSeason(mc.level) == SeasonCompat.Season.WINTER && isOutside && !SeasonCompat.inTropicalBiome(mc.player)) {
+            if((biome.is(Constants.IS_SNOWY) || SeasonCompat.getCurrentSeason(mc.level) == SeasonCompat.Season.WINTER) && isOutside && !SeasonCompat.inTropicalBiome(mc.player)) {
                 if(WINTER_LOOP == null || WINTER_LOOP.isStopped()) {
                     WINTER_LOOP = new BiomeAmbientSoundsHandler.LoopSoundInstance(WINTER_IDLE);
                     WINTER_LOOP.fadeIn();
@@ -126,5 +138,9 @@ public class CommonClass {
             timeSinceJungle++;
             timeSinceAddition++;
         }
+    }
+
+    public static void onClientJoin(ClientLevel level) {
+        isInVillage = false;
     }
 }
