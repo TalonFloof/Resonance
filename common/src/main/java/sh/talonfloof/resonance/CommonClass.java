@@ -8,6 +8,7 @@ import net.minecraft.client.resources.sounds.BiomeAmbientSoundsHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.level.block.entity.BellBlockEntity;
@@ -38,11 +39,14 @@ public class CommonClass {
     public static BiomeAmbientSoundsHandler.LoopSoundInstance DESERT_LOOP = null;
     public static final SoundEvent DESERT_IDLE = SoundEvent.createVariableRangeEvent(Constants.path("ambient.desert.idle"));
     public static final SoundEvent WINTER_IDLE = SoundEvent.createVariableRangeEvent(Constants.path("ambient.winter"));
+    public static final SoundEvent SWAMP_IDLE = SoundEvent.createVariableRangeEvent(Constants.path("ambient.swamp.idle"));
+    public static final SoundEvent SWAMP_NIGHT_IDLE = SoundEvent.createVariableRangeEvent(Constants.path("ambient.swamp.night_idle"));
     public static final SoundEvent VILLAGE_ADDITIONS = SoundEvent.createVariableRangeEvent(Constants.path("ambient.village.additions"));
     public static final SoundEvent VILLAGE_ROOSTER = SoundEvent.createVariableRangeEvent(Constants.path("ambient.village.rooster"));
 
     public static long timeSinceRiverTick = 0;
     public static long timeSinceAddition = 0;
+    public static long timeSinceSwamp = 0;
     public static long timeSinceJungle = 0;
     public static long timeSinceNightIdle = 0;
     public static long timeSincePlains = 0;
@@ -56,6 +60,7 @@ public class CommonClass {
         if(mc.isPaused())
             return;
         if(mc.level != null) {
+            var pos = new BlockPos(mc.player.getBlockX(),mc.player.getBlockY(),mc.player.getBlockZ());
             villageScanInterval++;
             if(villageScanInterval % 20 == 0) {
                 boolean prevInVillage = isInVillage;
@@ -99,8 +104,16 @@ public class CommonClass {
                     }
                 }
             }
-            var biome = mc.level.getBiome(new BlockPos(mc.player.getBlockX(),mc.player.getBlockY(),mc.player.getBlockZ()));
-            if(isOutside && Constants.isDesert(biome) && dayTime(mc.level) < 13000 && mc.level.getRainLevel(0) <= 0) {
+            var biome = mc.level.getBiome(pos);
+            if(config.ambiance.enableSwampSounds && isOutside && Constants.isSwamp(biome) && mc.level.getRainLevel(0) <= 0 && CommonClass.timeSinceSwamp >= 8*20) {
+                if(dayTime(mc.level) < 13000 && SeasonCompat.getCurrentSeason(mc.level) != SeasonCompat.Season.WINTER) {
+                    mc.level.playLocalSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), SWAMP_IDLE, SoundSource.AMBIENT, 0.5F, 1.0F, false);
+                } else {
+                    mc.level.playLocalSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), SWAMP_NIGHT_IDLE, SoundSource.AMBIENT, 1.0F, 1.0F, false);
+                }
+                CommonClass.timeSinceSwamp = 0;
+            }
+            if(config.ambiance.enableDesertIdle && isOutside && Constants.isDesert(biome) && dayTime(mc.level) < 13000 && mc.level.getRainLevel(0) <= 0) {
                 if(DESERT_LOOP == null || DESERT_LOOP.isStopped()) {
                     DESERT_LOOP = new BiomeAmbientSoundsHandler.LoopSoundInstance(DESERT_IDLE);
                     DESERT_LOOP.fadeIn();
@@ -151,6 +164,7 @@ public class CommonClass {
                     WINTER_LOOP.fadeOut();
                 }
             }
+            timeSinceSwamp++;
             timeSincePlains++;
             timeSinceNightIdle++;
             timeSinceJungle++;
@@ -160,5 +174,9 @@ public class CommonClass {
 
     public static void onClientJoin(ClientLevel level) {
         isInVillage = false;
+        timeSinceJungle = (9*20)+10;
+        timeSinceNightIdle = 8*20;
+        timeSincePlains = 9*20;
+        timeSinceSwamp = 8*20;
     }
 }

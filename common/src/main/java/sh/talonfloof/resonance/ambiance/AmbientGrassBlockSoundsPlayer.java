@@ -49,16 +49,16 @@ public class AmbientGrassBlockSoundsPlayer {
                     level.playLocalSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), JUNGLE_NIGHT_IDLE, SoundSource.AMBIENT, 1.0F, 1.0F, false);
                     CommonClass.timeSinceJungle = 0;
                 }
-                if(rsource.nextInt(config.ambiance.forestWolfChance) == 0 && Constants.isForest(biome) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSinceAddition >= 40) {
+                if(rsource.nextInt(config.ambiance.forestWolfChance) == 0 && Constants.isForest(biome) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSinceAddition >= 40 && isOutside) {
                     level.playLocalSound((double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), NIGHT_WOLF, SoundSource.AMBIENT, 1.0F, 1.0F, false);
                     CommonClass.timeSinceAddition = 0;
                 }
             } else {
-                if(isOutside && closeToPlayer && ((Constants.isPlains(biome) && SeasonCompat.getCurrentSeason(level) != SeasonCompat.Season.WINTER) || Constants.isSavanna(biome)) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSincePlains >= 9*20) {
+                if(config.ambiance.enablePlainsSavannaIdle && isOutside && closeToPlayer && ((Constants.isPlains(biome) && SeasonCompat.getCurrentSeason(level) != SeasonCompat.Season.WINTER) || Constants.isSavanna(biome)) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSincePlains >= 9*20) {
                     level.playLocalSound((double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), PLAINS_IDLE, SoundSource.AMBIENT, 0.25F, 1.0F, false);
                     CommonClass.timeSincePlains = 0;
                 }
-                if (isOutside && closeToPlayer && Constants.isJungle(biome) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSinceJungle >= (9*20)+10) {
+                if (config.ambiance.enableJungleIdle && isOutside && closeToPlayer && Constants.isJungle(biome) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSinceJungle >= (9*20)+10) {
                     level.playLocalSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), JUNGLE_IDLE, SoundSource.AMBIENT, 0.5F, 1.0F, false);
                     CommonClass.timeSinceJungle = 0;
                 }

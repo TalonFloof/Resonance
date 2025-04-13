@@ -149,6 +149,14 @@
       "resonance:swamp/idle3"
     ]
   },
+  "ambient.swamp.night_idle": {
+    "category": "ambiance",
+    "sounds": [
+      "resonance:swamp/night_idle1",
+      "resonance:swamp/night_idle2",
+      "resonance:swamp/night_idle3"
+    ]
+  },
   "ambient.village.additions": {
     "category": "ambiance",
     "sounds": [

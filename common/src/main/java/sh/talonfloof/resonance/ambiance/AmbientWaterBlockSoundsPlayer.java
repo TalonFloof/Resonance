@@ -20,11 +20,11 @@ import sh.talonfloof.resonance.compat.SeasonCompat;
 import sh.talonfloof.resonance.config.ResonanceConfig;
 
 import static sh.talonfloof.resonance.CommonClass.config;
+import static sh.talonfloof.resonance.CommonClass.isOutside;
 import static sh.talonfloof.resonance.Constants.dayTime;
 
 public class AmbientWaterBlockSoundsPlayer {
     public static final SoundEvent RIVER = SoundEvent.createVariableRangeEvent(Constants.path("ambient.river"));
-    public static final SoundEvent SWAMP_IDLE = SoundEvent.createVariableRangeEvent(Constants.path("ambient.swamp.idle"));
     public static final SoundEvent OCEAN_IDLE = SoundEvent.createVariableRangeEvent(Constants.path("ambient.ocean"));
 
     public static BiomeAmbientSoundsHandler.LoopSoundInstance RIVER_LOOP = null;
@@ -33,10 +33,7 @@ public class AmbientWaterBlockSoundsPlayer {
         if (state.is(Fluids.WATER) && pos.getY() >= 60) {
             if(level.getRainLevel(0) > 0 || SeasonCompat.getCurrentSeason(level) == SeasonCompat.Season.WINTER)
                 return;
-            if(rsource.nextInt(config.ambiance.swampIdleChance) == 0 && Constants.isSwamp(level.getBiome(pos))) {
-                level.playLocalSound((double) pos.getX(), (double) pos.getY(), (double) pos.getZ(), SWAMP_IDLE, SoundSource.AMBIENT, 1.0F, 1.0F, false);
-            }
-            if(config.ambiance.enableRiverSounds && Constants.isRiver(level.getBiome(pos))) {
+            if(config.ambiance.enableRiverSounds && Constants.isRiver(level.getBiome(pos)) && isOutside) {
                 if(Minecraft.getInstance().player.getPosition(0).distanceTo(pos.getCenter()) <= 8) {
                     if (RIVER_LOOP == null || (RIVER_LOOP.fade < 0 && RIVER_LOOP.fadeDirection == -1)) {
                         RIVER_LOOP = new BiomeAmbientSoundsHandler.LoopSoundInstance(RIVER);
