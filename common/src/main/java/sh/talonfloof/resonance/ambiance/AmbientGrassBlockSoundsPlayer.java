@@ -30,6 +30,7 @@ public class AmbientGrassBlockSoundsPlayer {
     private static final int SURROUNDING_BLOCKS_DISTANCE_CHECK = 8;
     public static final SoundEvent PLAINS_IDLE = SoundEvent.createVariableRangeEvent(Constants.path("ambient.plains.idle"));
     public static final SoundEvent NIGHT_IDLE = SoundEvent.createVariableRangeEvent(Constants.path("ambient.grass.night_idle"));
+    public static final SoundEvent SAVANNA_NIGHT_IDLE = SoundEvent.createVariableRangeEvent(Constants.path("ambient.savanna.night_idle"));
     public static final SoundEvent JUNGLE_NIGHT_IDLE = SoundEvent.createVariableRangeEvent(Constants.path("ambient.jungle.night_idle"));
     public static final SoundEvent JUNGLE_IDLE = SoundEvent.createVariableRangeEvent(Constants.path("ambient.jungle.idle"));
     public static final SoundEvent NIGHT_WOLF = SoundEvent.createVariableRangeEvent(Constants.path("ambient.forest.night_wolf"));
@@ -42,7 +43,10 @@ public class AmbientGrassBlockSoundsPlayer {
             var closeToPlayer = Minecraft.getInstance().player.getPosition(0).distanceTo(pos.getCenter()) <= 8;
             if(dayTime(level) > 13000) {
                 if(config.ambiance.enableNightIdle && isOutside && isInAmbientSoundBiome(biome) && shouldPlayAmbientSound(level, pos) && SeasonCompat.getCurrentSeason(level).ordinal() < 2 && CommonClass.timeSinceNightIdle >= 8*20) {
-                    level.playLocalSound((double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), NIGHT_IDLE, SoundSource.AMBIENT, 1.0F, 1.0F, false);
+                    if(Constants.isSavanna(biome))
+                        level.playLocalSound((double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), SAVANNA_NIGHT_IDLE, SoundSource.AMBIENT, 1.0F, 1.0F, false);
+                    else
+                        level.playLocalSound((double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), NIGHT_IDLE, SoundSource.AMBIENT, 1.0F, 1.0F, false);
                     CommonClass.timeSinceNightIdle = 0;
                 }
                 if (config.ambiance.enableJungleIdle && isOutside && closeToPlayer && Constants.isJungle(biome) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSinceJungle >= (9*20)+10) {

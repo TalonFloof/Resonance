@@ -8,5 +8,6 @@ Ambience, Seaside Waves, Close, A.wav by InspectorJ -- https://freesound.org/s/4
 Bird Whistling, A.wav by InspectorJ -- https://freesound.org/s/339326/ -- License: Attribution 4.0 (forest/forest_addition5.ogg, forest/forest_addition6.ogg)  
 Rooster, Crowing, A.wav by InspectorJ -- https://freesound.org/s/384188/ -- License: Attribution 4.0 (village/rooster1.ogg)  
 Snowy Winter Morning (01.29.22) .wav by chris5s -- https://freesound.org/s/624762/ -- License: Creative Commons 0 (snowy/idle.ogg, attributed this because it's really hard to find good snowy wind sounds, you're welcome)  
+Desert at Night by kangaroovindaloo -- https://freesound.org/s/138288/ -- License: Attribution 4.0 (savanna/night_idle1.ogg, savanna/night_idle2.ogg, savanna/night_idle3.ogg)
 
 All other sounds are public domain or under the Creative Commons 0 license

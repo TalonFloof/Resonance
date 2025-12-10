@@ -25,6 +25,7 @@ import static sh.talonfloof.resonance.Constants.dayTime;
 
 public class AmbientLeavesBlockSoundsPlayer {
     public static final SoundEvent PLAINS_TREE_ADDITIONS = SoundEvent.createVariableRangeEvent(Constants.path("ambient.plains.tree_additions"));
+    public static final SoundEvent SAVANNA_ADDITIONS = SoundEvent.createVariableRangeEvent(Constants.path("ambient.savanna.additions"));
     public static final SoundEvent FOREST_IDLE = SoundEvent.createVariableRangeEvent(Constants.path("ambient.forest.idle"));
     public static final SoundEvent FOREST_NIGHT_ADDITIONS = SoundEvent.createVariableRangeEvent(Constants.path("ambient.forest.night_additions"));
     public static final SoundEvent FOREST_ADDITIONS = SoundEvent.createVariableRangeEvent(Constants.path("ambient.forest.additions"));
@@ -56,6 +57,9 @@ public class AmbientLeavesBlockSoundsPlayer {
                     }
                 } else if(dayTime(level) < 12000 && Constants.isPlains(b) && season != SeasonCompat.Season.WINTER && isOutside) {
                     level.playPlayerSound(PLAINS_TREE_ADDITIONS, SoundSource.AMBIENT, 1.0F, 1.0F);
+                    CommonClass.timeSinceAddition = 0;
+                } else if(dayTime(level) < 12000 && Constants.isSavanna(b) && isOutside) {
+                    level.playPlayerSound(SAVANNA_ADDITIONS, SoundSource.AMBIENT, 1.0F, 1.0F);
                     CommonClass.timeSinceAddition = 0;
                 } else if(dayTime(level) < 12000 && Constants.isJungle(b) && isOutside) {
                     level.playPlayerSound(JUNGLE_ADDITIONS, SoundSource.AMBIENT, 1.0F, 1.0F);

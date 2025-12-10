@@ -1,120 +1,117 @@
 {
   "ambient.forest.idle": {
-    "category": "ambiance",
     "sounds": [
-      "resonance:leaves1",
-      "resonance:leaves2",
-      "resonance:leaves3",
-      "resonance:leaves4"
+      {"name": "resonance:leaves1"},
+      {"name": "resonance:leaves2"},
+      {"name": "resonance:leaves3"},
+      {"name": "resonance:leaves4"}
     ]
   },
   "ambient.forest.additions": {
-    "category": "ambiance",
     "sounds": [
-      "resonance:forest/forest_addition1",
-      "resonance:forest/forest_addition2",
+      {"name": "resonance:forest/forest_addition1"},
+      {"name": "resonance:forest/forest_addition2"},
       {"name": "resonance:forest/forest_addition3", "volume": 0.5},
       {"name": "resonance:forest/forest_addition4", "volume": 0.5},
-      "resonance:forest/forest_addition5",
-      "resonance:forest/forest_addition6"
+      {"name": "resonance:forest/forest_addition5"},
+      {"name": "resonance:forest/forest_addition6"}
     ]
   },
   "ambient.forest.winter_additions": {
-    "category": "ambiance",
     "sounds": [
       {"name": "resonance:forest/forest_addition3", "volume": 0.5},
       {"name": "resonance:forest/forest_addition4", "volume": 0.5},
-      "resonance:forest/forest_addition5",
-      "resonance:forest/forest_addition6"
+      {"name": "resonance:forest/forest_addition5"},
+      {"name": "resonance:forest/forest_addition6"}
     ]
   },
   "ambient.forest.night_additions": {
-    "category": "ambiance",
     "sounds": [
       "resonance:forest/forest_night_addition1",
       "resonance:forest/forest_night_addition2"
     ]
   },
   "ambient.jungle.idle": {
-    "category": "ambiance",
     "sounds": [
       "resonance:jungle/idle1",
       "resonance:jungle/idle2"
     ]
   },
   "ambient.jungle.night_idle": {
-    "category": "ambiance",
     "sounds": [
-      "resonance:jungle/night_idle1",
-      "resonance:jungle/night_idle2"
+      {"name": "resonance:jungle/night_idle1"},
+      {"name": "resonance:jungle/night_idle2"}
     ]
   },
   "ambient.jungle.additions": {
-    "category": "ambiance",
     "sounds": [
-      "resonance:jungle/additions1",
-      "resonance:jungle/additions2",
-      "resonance:jungle/additions3",
-      "resonance:jungle/additions4"
+      {"name": "resonance:jungle/additions1"},
+      {"name": "resonance:jungle/additions2"},
+      {"name": "resonance:jungle/additions3"},
+      {"name": "resonance:jungle/additions4"}
     ]
   },
   "ambient.forest.night_wolf": {
-    "category": "ambiance",
     "sounds": [
-      "resonance:forest/forest_night_addition3"
+      {"name": "resonance:forest/forest_night_addition3"}
     ]
   },
   "ambient.forest.dawn": {
-    "category": "ambiance",
     "sounds": [
       {"name":"resonance:forest/forest_dawn2", "volume": 0.2}
     ]
   },
   "ambient.plains.idle": {
-    "category": "ambiance",
     "sounds": [
-      "resonance:plains/idle1",
-      "resonance:plains/idle2",
-      "resonance:plains/idle3"
+      {"name": "resonance:plains/idle1"},
+      {"name": "resonance:plains/idle2"},
+      {"name": "resonance:plains/idle3"}
     ]
   },
   "ambient.plains.tree_additions": {
-    "category": "block",
     "sounds": [
       {"name": "resonance:plains_tree_addition1", "volume": 0.2},
       {"name": "resonance:plains_tree_addition2", "volume": 1.0}
     ]
   },
   "ambient.grass.night_idle": {
-    "category": "ambiance",
     "sounds": [
       "resonance:night1",
       "resonance:night2",
       "resonance:night3"
     ]
   },
-  "ambient.desert.idle": {
-    "category": "ambiance",
+  "ambient.savanna.night_idle": {
     "sounds": [
-      "resonance:desert/idle"
+      "resonance:savanna/night_idle1",
+      "resonance:savanna/night_idle2"
+    ]
+  },
+  "ambient.savanna.additions": {
+    "sounds": [
+      "resonance:savanna/additions1",
+      "resonance:forest/forest_addition3",
+      "resonance:forest/forest_addition4"
+    ]
+  },
+  "ambient.desert.idle": {
+    "sounds": [
+      {"name": "resonance:desert/idle"}
     ]
   },
   "ambient.winter": {
-    "category": "ambiance",
     "sounds": [
-      "resonance:snowy/idle"
+      {"name": "resonance:snowy/idle"}
     ]
   },
   "ambient.river": {
-    "category": "ambiance",
     "sounds": [
-      "resonance:river"
+      {"name": "resonance:river"}
     ]
   },
   "ambient.ocean": {
-    "category": "ambiance",
     "sounds": [
-      "resonance:ocean/loop"
+      {"name": "resonance:ocean/loop"}
     ]
   },
   "ambient.thunder.close": {
@@ -150,7 +147,6 @@
     ]
   },
   "ambient.swamp.night_idle": {
-    "category": "ambiance",
     "sounds": [
       "resonance:swamp/night_idle1",
       "resonance:swamp/night_idle2",
@@ -158,7 +154,6 @@
     ]
   },
   "ambient.village.additions": {
-    "category": "ambiance",
     "sounds": [
       "resonance:village/additions1",
       "resonance:village/additions2",
@@ -167,7 +162,6 @@
     ]
   },
   "ambient.village.rooster": {
-    "category": "ambiance",
     "sounds": [
       "resonance:village/rooster1"
     ]

@@ -2,15 +2,17 @@ package sh.talonfloof.resonance;
 
 import me.fzzyhmstrs.fzzy_config.api.ConfigApiJava;
 import me.fzzyhmstrs.fzzy_config.api.RegisterType;
+import me.fzzyhmstrs.fzzy_config.util.platform.Registrar;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.resources.sounds.BiomeAmbientSoundsHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BiomeTags;
-import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.entity.npc.villager.Villager;
 import net.minecraft.world.level.block.entity.BellBlockEntity;
 import net.minecraft.world.phys.AABB;
 import sh.talonfloof.resonance.ambiance.AmbientWaterBlockSoundsPlayer;
@@ -18,6 +20,7 @@ import sh.talonfloof.resonance.compat.SeasonCompat;
 import sh.talonfloof.resonance.config.ResonanceConfig;
 import sh.talonfloof.resonance.platform.Services;
 
+import static sh.talonfloof.resonance.Constants.LOG;
 import static sh.talonfloof.resonance.Constants.dayTime;
 import static sh.talonfloof.resonance.ambiance.AmbientWaterBlockSoundsPlayer.OCEAN_IDLE;
 
@@ -68,7 +71,7 @@ public class CommonClass {
                 villageScanInterval = 0;
                 // Also go ahead and check if we're outside
                 isOutside = Constants.isOutside(mc.player);
-                if (mc.level.dimensionType().natural()) {
+                if (mc.level.dimensionType().hasSkyLight()) {
                     var playerEyes = mc.player.getEyePosition();
                     AABB box = AABB.unitCubeFromLowerCorner(playerEyes).inflate(64);
                     var villagerEntities = mc.level.getEntitiesOfClass(Villager.class, box);
@@ -86,21 +89,21 @@ public class CommonClass {
                         }
                     }
                 }
-                if(!prevInVillage && isInVillage && mc.level.dayTime() / 24000 != previousDay) // Prevent the rooster sound from playing if the day changed, and we previously weren't in a village
-                    previousDay = (int)(mc.level.dayTime() / 24000);
+                if(!prevInVillage && isInVillage && mc.level.getDayTime() / 24000 != previousDay) // Prevent the rooster sound from playing if the day changed, and we previously weren't in a village
+                    previousDay = (int)(mc.level.getDayTime() / 24000);
             }
             if(isInVillage) {
                 if(mc.level.getRainLevel(0) == 0) {
-                    if (mc.level.dayTime() / 24000 != previousDay) {
+                    if (mc.level.getDayTime() / 24000 != previousDay) {
                         mc.player.playSound(VILLAGE_ROOSTER, 10000000.0F, 1.0F);
-                        previousDay = (int) (mc.level.dayTime() / 24000);
+                        previousDay = (int) (mc.level.getDayTime() / 24000);
                     }
                     if (mc.level.getRandom().nextInt(config.ambiance.villageAdditionsChance) == 0 && dayTime(mc.level) < 12000) {
                         mc.player.playSound(VILLAGE_ADDITIONS, 10000000.0F, 1.0F);
                     }
                 } else {
-                    if (mc.level.dayTime() / 24000 != previousDay) { // Prevent a delayed rooster sound due to rain
-                        previousDay = (int) (mc.level.dayTime() / 24000);
+                    if (mc.level.getDayTime() / 24000 != previousDay) { // Prevent a delayed rooster sound due to rain
+                        previousDay = (int) (mc.level.getDayTime() / 24000);
                     }
                 }
             }
