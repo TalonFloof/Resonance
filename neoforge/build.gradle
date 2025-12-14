@@ -44,8 +44,8 @@ neoForge {
 
 dependencies {
     implementation "me.fzzyhmstrs:fzzy_config:${project.fzzy_version}+${project.fzzy_mc_version}+neoforge"
-    compileOnly "maven.modrinth:serene-seasons:${project.serene_seasons_version}-neoforge,${project.glitch_mc_version}"
-    compileOnly 'com.github.glitchfiend:GlitchCore-neoforge:' + glitch_mc_version + '-' + glitchcore_version
+    implementation "maven.modrinth:serene-seasons:${project.serene_seasons_version}-neoforge,${project.glitch_mc_version}"
+    implementation 'com.github.glitchfiend:GlitchCore-neoforge:' + glitch_mc_version + '-' + glitchcore_version
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
