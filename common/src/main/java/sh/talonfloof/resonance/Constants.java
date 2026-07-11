@@ -25,6 +25,8 @@ public class Constants {
 		return Identifier.fromNamespaceAndPath(MOD_ID,path);
 	}
 
+	public static final TagKey<Biome> IS_MEADOW = TagKey.create(Registries.BIOME,Identifier.parse("c:is_meadow"));
+	public static boolean isMeadow(Holder<Biome> b) { return b.is(IS_MEADOW) || b.is(Biomes.MEADOW); }
 	public static final TagKey<Biome> IS_PLAINS = TagKey.create(Registries.BIOME,Identifier.parse("c:is_plains"));
 	public static boolean isPlains(Holder<Biome> b) { return b.is(IS_PLAINS) || b.is(Biomes.PLAINS) || b.is(Biomes.SUNFLOWER_PLAINS); }
 	public static final TagKey<Biome> IS_FOREST = TagKey.create(Registries.BIOME,Identifier.parse("c:is_forest"));
@@ -49,7 +51,7 @@ public class Constants {
 	public static boolean isRiver(Holder<Biome> b) { return b.is(IS_RIVER) || b.is(BiomeTags.IS_RIVER); }
 
 	public static long dayTime(Level l) {
-		return l.getDayTime() % 24000;
+		return l.getOverworldClockTime() % 24000;
 	}
 
 	public static boolean isOutside(Player player) {

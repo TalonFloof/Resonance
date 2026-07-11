@@ -58,7 +58,7 @@ public class AmbientGrassBlockSoundsPlayer {
                     CommonClass.timeSinceAddition = 0;
                 }
             } else {
-                if(config.ambiance.enablePlainsSavannaIdle && isOutside && closeToPlayer && ((Constants.isPlains(biome) && SeasonCompat.getCurrentSeason(level) != SeasonCompat.Season.WINTER) || Constants.isSavanna(biome)) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSincePlains >= 9*20) {
+                if(config.ambiance.enablePlainsSavannaIdle && isOutside && closeToPlayer && (((Constants.isPlains(biome) || Constants.isMeadow(biome)) && SeasonCompat.getCurrentSeason(level) != SeasonCompat.Season.WINTER) || Constants.isSavanna(biome)) && shouldPlayAmbientSound(level, pos) && CommonClass.timeSincePlains >= 9*20) {
                     level.playLocalSound((double)pos.getX(), (double)pos.getY(), (double)pos.getZ(), PLAINS_IDLE, SoundSource.AMBIENT, 0.25F, 1.0F, false);
                     CommonClass.timeSincePlains = 0;
                 }

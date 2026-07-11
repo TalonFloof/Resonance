@@ -16,10 +16,7 @@ neoForge {
     if (at.exists()) {
         accessTransformers.from(at.absolutePath)
     }
-    /*parchment {
-        minecraftVersion = parchment_minecraft
-        mappingsVersion = parchment_version
-    }*/
+
     runs {
         configureEach {
             systemProperty('neoforge.enabledGameTestNamespaces', mod_id)
@@ -44,7 +41,7 @@ neoForge {
 
 dependencies {
     implementation "me.fzzyhmstrs:fzzy_config:${project.fzzy_version}+${project.fzzy_mc_version}+neoforge"
-    implementation "maven.modrinth:serene-seasons:${project.serene_seasons_version}-neoforge,${project.glitch_mc_version}"
+    implementation "maven.modrinth:serene-seasons:${project.serene_seasons_version}-neoforge,${project.serene_seasons_mc_version}"
     implementation 'com.github.glitchfiend:GlitchCore-neoforge:' + glitch_mc_version + '-' + glitchcore_version
 }
 

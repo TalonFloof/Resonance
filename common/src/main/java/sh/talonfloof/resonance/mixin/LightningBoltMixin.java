@@ -1,5 +1,7 @@
 package sh.talonfloof.resonance.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -27,10 +29,10 @@ public class LightningBoltMixin {
     @Unique
     private static SoundEvent THUNDER_FAR = SoundEvent.createVariableRangeEvent(Constants.path("ambient.thunder.far"));
 
-    @Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;playLocalSound(DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FFZ)V"))
-    private void playSound(Level level, double x, double y, double z, SoundEvent sound, SoundSource source, float volume, float pitch, boolean useDistance) {
+    @WrapOperation(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;playLocalSound(DDDLnet/minecraft/sounds/SoundEvent;Lnet/minecraft/sounds/SoundSource;FFZ)V"))
+    private void playSound(Level level, double x, double y, double z, SoundEvent sound, SoundSource source, float volume, float pitch, boolean useDistance, Operation<Void> operation) {
         if(!config.weather.newThunderSounds) {
-            level.playLocalSound(x,y,z,sound,source,volume,pitch,useDistance);
+            operation.call(level,x,y,z,sound,source,volume,pitch,useDistance);
             return;
         }
         LightningBolt lightningBolt = (LightningBolt) (Object) this;

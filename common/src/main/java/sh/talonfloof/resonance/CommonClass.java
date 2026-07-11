@@ -89,21 +89,21 @@ public class CommonClass {
                         }
                     }
                 }
-                if(!prevInVillage && isInVillage && mc.level.getDayTime() / 24000 != previousDay) // Prevent the rooster sound from playing if the day changed, and we previously weren't in a village
-                    previousDay = (int)(mc.level.getDayTime() / 24000);
+                if(!prevInVillage && isInVillage && mc.level.getOverworldClockTime() / 24000 != previousDay) // Prevent the rooster sound from playing if the day changed, and we previously weren't in a village
+                    previousDay = (int)(mc.level.getOverworldClockTime() / 24000);
             }
             if(isInVillage) {
                 if(mc.level.getRainLevel(0) == 0) {
-                    if (mc.level.getDayTime() / 24000 != previousDay) {
+                    if (mc.level.getOverworldClockTime() / 24000 != previousDay) {
                         mc.player.playSound(VILLAGE_ROOSTER, 10000000.0F, 1.0F);
-                        previousDay = (int) (mc.level.getDayTime() / 24000);
+                        previousDay = (int) (mc.level.getOverworldClockTime() / 24000);
                     }
                     if (mc.level.getRandom().nextInt(config.ambiance.villageAdditionsChance) == 0 && dayTime(mc.level) < 12000) {
                         mc.player.playSound(VILLAGE_ADDITIONS, 10000000.0F, 1.0F);
                     }
                 } else {
-                    if (mc.level.getDayTime() / 24000 != previousDay) { // Prevent a delayed rooster sound due to rain
-                        previousDay = (int) (mc.level.getDayTime() / 24000);
+                    if (mc.level.getOverworldClockTime() / 24000 != previousDay) { // Prevent a delayed rooster sound due to rain
+                        previousDay = (int) (mc.level.getOverworldClockTime() / 24000);
                     }
                 }
             }
@@ -132,7 +132,7 @@ public class CommonClass {
                     DESERT_LOOP.fadeOut();
                 }
             }
-            if(config.ambiance.enableOceanSounds & mc.player.getBlockY() >= 50 && (Constants.isBeach(biome) || Constants.isOcean(biome)) && mc.level.getRainLevel(0) <= 0) {
+            if(config.ambiance.enableOceanSounds & mc.player.getBlockY() >= 50 && !mc.player.isUnderWater() && (Constants.isBeach(biome) || Constants.isOcean(biome)) && mc.level.getRainLevel(0) <= 0) {
                 if(OCEAN_LOOP == null || OCEAN_LOOP.isStopped()) {
                     OCEAN_LOOP = new BiomeAmbientSoundsHandler.LoopSoundInstance(OCEAN_IDLE);
                     OCEAN_LOOP.fadeIn();
